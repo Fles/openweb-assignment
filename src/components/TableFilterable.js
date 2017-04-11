@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Icon, Table, Image } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
+import '../css/components/TableFilterable.css';
 
-class TableStriped extends Component {
+class TableFilterable extends Component {
   constructor(props) {
     super(props);
     this.state = {}
@@ -9,31 +10,27 @@ class TableStriped extends Component {
 
   render() {
     let { employees } = this.props.data;
+
     let rows =  employees.map((obj, i) => {
+      let { name, bio, profileImage, role, skills } = obj;
+
       return (
         <Table.Row key={i}>
-          <Table.Cell collapsing>
-            <Icon name='user' color="green"/>
-          </Table.Cell>
-          <Table.Cell>Omar Ras</Table.Cell>
-          <Table.Cell>Lorem ipsum dolor sit amet, consectetur.</Table.Cell>
-          <Table.Cell>Scrum Master</Table.Cell>
-          <Table.Cell>Scrum</Table.Cell>
           <Table.Cell>
-            <Image
-              src='http://lorempixel.com/30/30/people/'
-              as='a' size='medium'
-              href='http://google.com'
-              target='_blank'
-              className={'img-responsive'}
+            <div className="userImage img-circle img-responsive center-block"
+              style={{background: `url(${profileImage})`}}
             />
           </Table.Cell>
+          <Table.Cell>{ name }</Table.Cell>
+          <Table.Cell>{ bio }</Table.Cell>
+          <Table.Cell>{ role }</Table.Cell>
+          <Table.Cell>{ skills.join(', ') }</Table.Cell>
         </Table.Row>
       );
     });
 
     return (
-      <Table>
+      <Table className='TableFilterable'>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell colSpan='3'>Employees</Table.HeaderCell>
@@ -44,7 +41,6 @@ class TableStriped extends Component {
             <Table.HeaderCell>Bio</Table.HeaderCell>
             <Table.HeaderCell>Role</Table.HeaderCell>
             <Table.HeaderCell>Skills</Table.HeaderCell>
-            <Table.HeaderCell>Profile image</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -55,4 +51,4 @@ class TableStriped extends Component {
   }
 }
 
-export default TableStriped;
+export default TableFilterable;
