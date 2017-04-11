@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import './css/App.css';
+import TableFilterable from './components/TableFilterable';
 // eslint-disable-next-line
-import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+import { Navbar, Jumbotron } from 'react-bootstrap';
+
 
 class App extends Component {
   render() {
@@ -15,7 +17,9 @@ class App extends Component {
           </h4>
         </div>
         <div className={classnames('content')}>
-          <table className="table"></table>
+          <div className={classnames('table-responsive')}>
+            <TableFilterable data={[]} />
+          </div>
         </div>
       </div>
     );
