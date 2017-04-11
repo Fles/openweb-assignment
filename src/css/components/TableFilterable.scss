@@ -1,12 +1,18 @@
 .TableFilterable {
+
   tbody > tr > td {
     vertical-align: middle !important;
-    .userImage {
+
+    div.userImage {
       width: 75px;
       height: 75px;
       background-size: cover !important;
       background-position: center !important;
       border: 5px solid lightgray;
     }
+  }
+
+  thead > tr > th > div > div.checkbox {
+    margin-left: 20px;
   }
 }
