@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import './css/App.css';
 import TableFilterable from './components/TableFilterable';
+import $ from "jquery";
 // eslint-disable-next-line
 import { Navbar, Jumbotron } from 'react-bootstrap';
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      response: null
+    }
+  }
   render() {
     return (
       <div className={classnames('App', 'container-fluid')}>
@@ -18,11 +26,24 @@ class App extends Component {
         </div>
         <div className={classnames('content')}>
           <div className={classnames('table-responsive')}>
-            <TableFilterable data={[]} />
+            { this.getEmployeesTable() }
           </div>
         </div>
       </div>
     );
+  }
+
+  componentDidMount() {
+    $.ajax({
+      url: 'https://sys4.open-web.nl/employees.json',
+      success: response => this.setState({response}),
+      crossOrigin: true,
+    });
+  }
+
+  getEmployeesTable() {
+    if (this.state.response == null) return null;
+    return <TableFilterable data={this.state.response} />;
   }
 }
 

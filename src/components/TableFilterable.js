@@ -1,24 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Icon, Table, Image } from 'semantic-ui-react';
 
-const TableStriped = () => {
-  return (
-    <Table>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell colSpan='3'>Employees</Table.HeaderCell>
-        </Table.Row>
-        <Table.Row>
-          <Table.HeaderCell></Table.HeaderCell>
-          <Table.HeaderCell>Name</Table.HeaderCell>
-          <Table.HeaderCell>Bio</Table.HeaderCell>
-          <Table.HeaderCell>Role</Table.HeaderCell>
-          <Table.HeaderCell>Skills</Table.HeaderCell>
-          <Table.HeaderCell>Profile image</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        <Table.Row>
+class TableStriped extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+
+  render() {
+    let { employees } = this.props.data;
+    let rows =  employees.map((obj, i) => {
+      return (
+        <Table.Row key={i}>
           <Table.Cell collapsing>
             <Icon name='user' color="green"/>
           </Table.Cell>
@@ -36,9 +29,30 @@ const TableStriped = () => {
             />
           </Table.Cell>
         </Table.Row>
-      </Table.Body>
-    </Table>
-  )
+      );
+    });
+
+    return (
+      <Table>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell colSpan='3'>Employees</Table.HeaderCell>
+          </Table.Row>
+          <Table.Row>
+            <Table.HeaderCell></Table.HeaderCell>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Bio</Table.HeaderCell>
+            <Table.HeaderCell>Role</Table.HeaderCell>
+            <Table.HeaderCell>Skills</Table.HeaderCell>
+            <Table.HeaderCell>Profile image</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          { rows }
+        </Table.Body>
+      </Table>
+    );
+  }
 }
 
 export default TableStriped;
