@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
 import classnames from 'classnames';
+import './css/App.css';
+// eslint-disable-next-line
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 
 class App extends Component {
