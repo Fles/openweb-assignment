@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
-import classnames from 'classnames';
-import './css/App.css';
 import TableFilterable from './components/TableFilterable';
+import { Checkbox } from 'semantic-ui-react';
+import classnames from 'classnames';
 import $ from "jquery";
-// eslint-disable-next-line
-import { Navbar, Jumbotron } from 'react-bootstrap';
-
+import './css/App.css';
 
 class App extends Component {
-  constructor(props) {
+
+  constructor (props) {
     super(props);
 
     this.state = {
-      response: null
+      employees: null,
+      filters: [],
+      selected: [],
     }
   }
-  render() {
+
+  render () {
     return (
       <div className={classnames('App', 'container-fluid')}>
         <div className={classnames('page-header', 'text-center')}>
@@ -26,6 +28,7 @@ class App extends Component {
         </div>
         <div className={classnames('content')}>
           <div className={classnames('table-responsive')}>
+            { this.getFilters() }
             { this.getEmployeesTable() }
           </div>
         </div>
@@ -33,17 +36,80 @@ class App extends Component {
     );
   }
 
-  componentDidMount() {
+  componentDidMount () {
     $.ajax({
       url: 'https://sys4.open-web.nl/employees.json',
-      success: response => this.setState({response}),
       crossOrigin: true,
+      success: response => {
+        let filters = [], selected = [];
+        this.setState({employees: response.employees});
+
+        response.employees.forEach(obj => {
+          obj.skills.forEach(skill => {
+            if (!filters.includes(skill)) {
+              filters.push(skill);
+              selected.push(skill);
+            }
+          });
+        });
+        this.setState({filters, selected});
+      },
     });
   }
 
-  getEmployeesTable() {
-    if (this.state.response == null) return null;
-    return <TableFilterable data={this.state.response} />;
+  getFilters () {
+    let { filters } = this.state;
+
+    let handleClick = (e, data) => {
+      let { label, checked } = data;
+      let { selected } = this.state;
+
+      if (!checked) {
+        if (!selected.includes(label)) selected.push(label);
+      } else {
+        let index = selected.indexOf(label);
+        if (index > -1) selected.splice(index, 1);
+      }
+      this.setState({selected});
+    };
+
+    return (
+      <div className="filters center-block text-center">
+        { filters.map((c, i) => <Checkbox label={c} key={i} onClick={handleClick} defaultChecked />) }
+      </div>
+    );
+  }
+
+  getEmployeesTable () {
+    if (this.state.employees == null) return null;
+
+    let columns = [
+      { title: "" },
+      { title: "Name" },
+      { title: "Bio" },
+      { title: "Role" },
+      { title: "Skills" },
+    ];
+
+    return (
+      <TableFilterable
+        data={ this.getEmployees() }
+        columns={ columns }
+      />
+    );
+  }
+
+  getEmployees () {
+    if (this.state.employees == null) return null;
+    let { employees, selected } = this.state;
+
+    let filtered_employees = employees.filter(obj => {
+      let { skills } = obj;
+      if (selected.length === 0 && skills.length === 0) return true;
+      return !!selected.some(v => !!skills.includes(v));
+    });
+
+    return filtered_employees;
   }
 }
 

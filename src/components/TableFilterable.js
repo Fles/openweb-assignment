@@ -1,6 +1,11 @@
-import React, { Component } from 'react';
-import { Table, Checkbox } from 'semantic-ui-react';
+import React, { Component, PropTypes } from 'react';
+import { Table } from 'semantic-ui-react';
 import '../css/components/TableFilterable.css';
+
+const propTypes = {
+  columns: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+};
 
 class TableFilterable extends Component {
   constructor(props) {
@@ -11,29 +16,9 @@ class TableFilterable extends Component {
   }
 
   render() {
-    let { employees } = this.props.data;
-
-    let columns = (
-      <Table.Row>
-        <Table.HeaderCell></Table.HeaderCell>
-        <Table.HeaderCell>Name</Table.HeaderCell>
-        <Table.HeaderCell>Bio</Table.HeaderCell>
-        <Table.HeaderCell>Role</Table.HeaderCell>
-        <Table.HeaderCell>Skills</Table.HeaderCell>
-      </Table.Row>
-    );
-
-    let checkboxes = [];
-
-    let rows = employees.map((obj, i) => {
+    let { data } = this.props;
+    let rows = data.map((obj, i) => {
       let { name, bio, profileImage, role, skills } = obj;
-
-      skills.forEach(skill => {
-        if (!checkboxes.includes(skill)) {
-          checkboxes.push(skill);
-        }
-      });
-
       return (
         <Table.Row key={i}>
           <Table.Cell>
@@ -49,19 +34,16 @@ class TableFilterable extends Component {
       );
     });
 
-    let filters = (
-      <div className="center-block text-center">
-        { checkboxes.map((c, i) => <Checkbox label={c} key={i} />)}
-      </div>
-    );
+    let columns = this.props.columns.map((c, i) => {
+      return <Table.HeaderCell key={i}>{c.title}</Table.HeaderCell>;
+    });
 
     return (
       <Table className='TableFilterable'>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell colSpan='5'>{ filters }</Table.HeaderCell>
-          </Table.Row>
           { columns }
+          </Table.Row>
         </Table.Header>
         <Table.Body>
           { rows }
@@ -71,4 +53,5 @@ class TableFilterable extends Component {
   }
 }
 
+TableFilterable.propTypes = propTypes;
 export default TableFilterable;
