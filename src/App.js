@@ -26,9 +26,9 @@ class App extends Component {
             An overview of the employees that work at Open Web.
           </h4>
         </div>
-        <div className={classnames('content')}>
+        <div className={classnames('content', 'container')}>
+          { this.getFilters() }
           <div className={classnames('table-responsive')}>
-            { this.getFilters() }
             { this.getEmployeesTable() }
           </div>
         </div>
@@ -84,11 +84,11 @@ class App extends Component {
     if (this.state.employees == null) return null;
 
     let columns = [
-      { title: "" },
-      { title: "Name" },
-      { title: "Bio" },
-      { title: "Role" },
-      { title: "Skills" },
+      { title: "", width: "two" },
+      { title: "Name", width: "two" },
+      { title: "Bio", width: "eight" },
+      { title: "Role", width: "two" },
+      { title: "Skills", width: "two" },
     ];
 
     return (

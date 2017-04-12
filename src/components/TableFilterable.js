@@ -35,7 +35,7 @@ class TableFilterable extends Component {
     });
 
     let columns = this.props.columns.map((c, i) => {
-      return <Table.HeaderCell key={i}>{c.title}</Table.HeaderCell>;
+      return <Table.HeaderCell width={c.width} key={i}>{c.title}</Table.HeaderCell>;
     });
 
     return (

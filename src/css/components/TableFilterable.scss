@@ -1,7 +1,7 @@
 .TableFilterable {
-
   tbody > tr > td {
     vertical-align: middle !important;
+    white-space: pre-wrap;
 
     div.userImage {
       width: 75px;
