@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TableFilterable from './components/TableFilterable';
-import { Checkbox } from 'semantic-ui-react';
+import { Checkbox, Dimmer, Loader, Segment } from 'semantic-ui-react';
 import classnames from 'classnames';
 import $ from "jquery";
 import './css/App.css';
@@ -18,6 +18,7 @@ class App extends Component {
   }
 
   render () {
+    let isLoaded = this.state.employees != null;
     return (
       <div className={classnames('App', 'container-fluid')}>
         <div className={classnames('page-header', 'text-center')}>
@@ -27,10 +28,13 @@ class App extends Component {
           </h4>
         </div>
         <div className={classnames('content', 'container')}>
-          { this.getFilters() }
-          <div className={classnames('table-responsive')}>
-            { this.getEmployeesTable() }
-          </div>
+            <Dimmer inverted active={!isLoaded}>
+              <Loader disabled={isLoaded}/>
+            </Dimmer>
+            { this.getFilters() }
+            <div className={classnames('table-responsive')}>
+              { this.getEmployeesTable() }
+            </div>
         </div>
       </div>
     );
