@@ -1,7 +1,8 @@
 .TableFilterable {
+
   tbody > tr > td {
     vertical-align: middle !important;
-    white-space: pre-wrap;
+    white-space: pre-wrap !important;
 
     div.userImage {
       width: 75px;
@@ -11,8 +12,74 @@
       border: 5px solid lightgray;
     }
   }
+}
 
-  thead > tr > th > div > div.checkbox {
-    margin-left: 20px;
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+  /* Force table to not be like tables anymore */
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr { border: none; }
+
+  td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+    margin-bottom: 20px;
+  }
+
+  td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: -15px;
+    //left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  td:nth-of-type(1):before { content: ""; }
+  td:nth-of-type(2):before { content: "Name"; }
+  td:nth-of-type(3):before { content: "Bio"; }
+  td:nth-of-type(4):before { content: "Role"; }
+  td:nth-of-type(5):before { content: "Skills"; }
+
+  .TableFilterable {
+    border: none !important;
+
+    tbody > tr > td {
+
+      &:nth-child(2) {
+        margin: -50px 10px 25px 10px;
+        color: white;
+        background-color: rgba(0,0,0,0.63) !important;
+
+        &:before {
+          display: none;
+        }
+      }
+
+      div.userImage {
+        width: 100%;
+        height: 150px;
+        border-radius: 0;
+        border: none;
+      }
+    }
   }
 }

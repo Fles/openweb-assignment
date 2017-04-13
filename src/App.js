@@ -84,11 +84,11 @@ class App extends Component {
     if (this.state.employees == null) return null;
 
     let columns = [
-      { title: "", width: "two" },
-      { title: "Name", width: "two" },
-      { title: "Bio", width: "eight" },
-      { title: "Role", width: "two" },
-      { title: "Skills", width: "two" },
+      { title: "",},
+      { title: "Name",},
+      { title: "Bio",},
+      { title: "Role",},
+      { title: "Skills",},
     ];
 
     return (
